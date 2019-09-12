@@ -1,0 +1,17 @@
+com\soaint\crud\controller\ApiController.class
+com\soaint\crud\service\ServiceRigthNow.class
+com\soaint\crud\service\ServiceOracle.class
+com\soaint\crud\service\ServiceRigthNow$1.class
+com\soaint\crud\service\Services.class
+com\soaint\crud\contacts\modelsRn\Emails.class
+com\soaint\crud\contacts\modelsRn\Name.class
+com\soaint\crud\CrudApplication.class
+com\soaint\crud\contacts\modelsRn\AddressType.class
+com\soaint\crud\service\ServiceRigthNow$2.class
+com\soaint\crud\service\ServiceEloqua.class
+com\soaint\crud\service\ServiceOracle$2.class
+com\soaint\crud\contacts\ContactosEl.class
+com\soaint\crud\contacts\ContactosRn.class
+com\soaint\crud\service\ServiceOracle$1.class
+com\soaint\crud\contacts\ContactosOsc.class
+com\soaint\crud\service\ServiceRigthNow$3.class
