@@ -1,5 +1,6 @@
 package com.soaint.crud.models.osc.leed;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -17,6 +18,7 @@ public class Leed {
 	@JsonProperty("Name")
 	private String Name;
 	@JsonProperty("LeadId")
+	@JsonIgnore
 	private long LeadId;
 	
 	public Leed() {
@@ -38,6 +40,7 @@ public class Leed {
 	@JsonProperty("Name")
 	public void setName(String name) {Name = name;}
 	@JsonProperty("LeadId")
+	@JsonIgnore
 	public long getLeadId() {return LeadId;}
 	@JsonProperty("LeadId")
 	public void setLeadId(long leadId) {LeadId = leadId;}

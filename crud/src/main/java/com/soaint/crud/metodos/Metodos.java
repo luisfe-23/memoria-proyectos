@@ -1,5 +1,12 @@
 package com.soaint.crud.metodos;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.PasswordAuthentication;
+import java.net.URL;
 import java.util.Base64;
 
 import org.apache.http.HttpHeaders;
@@ -7,8 +14,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.soaint.crud.models.Eloqua.ContacAll;
 import com.soaint.crud.service.Services;
 
 public class Metodos {
@@ -43,4 +52,28 @@ public class Metodos {
 		}	
 		return response;	
 	}
+	
+	
+	 public static String buscarOracleSCLead(String emails) throws Exception{	 
+	 
+			URL obj = new URL(Services.queryleads() + "'" +emails+ "'");
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			con.setRequestMethod("GET");
+			Authenticator.setDefault (new Authenticator() {protected PasswordAuthentication getPasswordAuthentication() {
+			        return new PasswordAuthentication (Services.getUserOracle(), Services.getPasswdOracle().toCharArray()); }
+			});	
+			
+				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+	
+				while ((inputLine = in.readLine()) != null) {
+						response.append(inputLine);
+				}in.close();
+				con.disconnect();
+				
+				return response.toString();
+	 }
 }
+	
+

@@ -13,6 +13,8 @@ public class Services {
 	    public static String DelOsc(){return PROPERTIES.getString("DelOsc");}
 	    public static String PostOsc(){return PROPERTIES.getString("PostOsc");}
 	    public static String leadOsc(){return PROPERTIES.getString("LeadOsc");}
+	    public static String DelleadOsc(){return PROPERTIES.getString("DelLeadOsc");}
+	    public static String queryleads(){return PROPERTIES.getString("UrlLeadOscQ");}
 	    
 	    //Eloqua
 	    public static String getURLEloqua(){return PROPERTIES.getString("UrlEloqua");}

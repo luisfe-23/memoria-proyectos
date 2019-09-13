@@ -129,6 +129,7 @@ public class ServiceOracle  {
 			l1.setPartyId(c1.getId());
 			try {
 				String contactJSON = new ObjectMapper().writeValueAsString(l1);
+				System.out.println(new ObjectMapper().writeValueAsString(l1));
 				return crearlead(contactJSON);
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -149,8 +150,8 @@ public class ServiceOracle  {
 				httpPost.setEntity(entity);
 				httpPost.setHeader("Accept", "application/json");
 				httpPost.setHeader("Content-type", "application/json");
-
-				httpclient.execute(httpPost);
+				
+				System.out.println(httpclient.execute(httpPost));
 				httpclient.close();
 						
 			} catch (Exception exception) {
@@ -160,11 +161,43 @@ public class ServiceOracle  {
 			return response;	
 		}
 		
+	 	public String deleteOscLead(String emails) throws Exception{
+			
+	 		String content =Metodos.buscarOracleSCLead(emails);
+			JSONObject jsonObject = new JSONObject(content);
+			JSONArray items = jsonObject.getJSONArray("items");
+			long id = items.getJSONObject(0).getLong("LeadId"); 
+	 		
+			try {
+		 		if (id != 0) {
+					URL obj = new URL(Services.getURLOracle() + Services.DelleadOsc() + id);
+					HttpURLConnection delete = (HttpURLConnection) obj.openConnection();
+					delete.setRequestMethod("DELETE");
+					Authenticator.setDefault (new Authenticator() {
+					    protected PasswordAuthentication getPasswordAuthentication() {
+					        return new PasswordAuthentication (Services.getUserOracle(), Services.getPasswdOracle().toCharArray()); }
+					});
+					
+			        BufferedReader in = new BufferedReader(new InputStreamReader(delete.getInputStream()));
+			        
+			        
+			        
+			        return "Contato eliminado"; 
+		        
+				} else {
+						return "Contacto no encontrado";
+				}
+			} catch (Exception e) {
+				return"Error";
+		}
+	}
+		
 //****************************************MethodDelete******************************************
 	 
 	 	public String deleteOsc(String emails){
-			
+	 		
 			try {
+					deleteOscLead(emails);
 					ContacAll delOsc = buscarOracleSC(emails);
 					long id = delOsc.getId();	
 		 		if (id != 0) {
