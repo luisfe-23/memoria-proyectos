@@ -52,6 +52,7 @@ public class ServiceOracle  {
 					JSONArray items = jsonObject.getJSONArray("items");
 					contactoOsc.setId(items.getJSONObject(0).getLong("PartyNumber"));
 					contactoOsc.setEmailAddess(items.getJSONObject(0).getString("EmailAddress"));
+					contactoOsc.setFirstName(items.getJSONObject(0).getString("FirstName"));
 					
 					System.out.println("Contacto encontrado " + contactoOsc.toString());
 			} catch (Exception e) {
@@ -66,6 +67,7 @@ public class ServiceOracle  {
 	 public String crearOsc(String contacto) {
 			String response = ""; 		
 			try {		
+
 					JSONObject jsonObject = new JSONObject(contacto);
 					String emails = jsonObject.getString("EmailAddress");
 				
@@ -110,7 +112,6 @@ public class ServiceOracle  {
 				String contactJSON = new ObjectMapper().writeValueAsString(contacto);
 				crearOsc(contactJSON);	
 				serializarlead(jsonSend);
-				System.out.println(jsonSend);
 				return "Creado Correctamente";
 			}catch (Exception e) {
 				return "Error";
@@ -120,31 +121,24 @@ public class ServiceOracle  {
 //Lead******************************************************************************************
 		
 		public String serializarlead(String jsonSend) {
-			JSONObject jsonObject = new JSONObject();
-			ContacAll c1 = buscarOracleSC(jsonObject.getString("address"));
-			System.out.println(c1);
+			JSONObject jsonObject = new JSONObject(jsonSend);
+			ContacAll c1 = buscarOracleSC(jsonObject.getString("EmailAddress"));
 			
 			Leed l1 = new Leed();
 			l1.setName(c1.getFirstName());
 			l1.setPartyId(c1.getId());
-			System.out.println(l1);
 			try {
 				String contactJSON = new ObjectMapper().writeValueAsString(l1);
-				crearOsc(contactJSON);	
-				System.out.println(contactJSON);
 				return crearlead(contactJSON);
 			}catch (Exception e) {
 				e.printStackTrace();
 				return "Error";
-			}
-		
-			
+			}	
 		}
 		
 		public String crearlead(String contacto) {
 			String response = ""; 		
-			try {		
-					
+			try {			
 				CloseableHttpClient httpclient = HttpClients.createDefault(); 
 				HttpPost httpPost = new HttpPost(Services.getURLOracle() + Services.leadOsc());
 				String autorizacion = Services.getUserOracle() + ":" + Services.getPasswdOracle();
@@ -183,15 +177,14 @@ public class ServiceOracle  {
 					});
 					
 			        BufferedReader in = new BufferedReader(new InputStreamReader(delete.getInputStream()));
-			        System.out.println("Contato eliminado ");
+			        return "Contato eliminado"; 
 		        
 				} else {
-						System.out.println("Contacto no encontrado");
+						return "Contacto no encontrado";
 				}
 			} catch (Exception e) {
 				return"Error";
 		}
-			return "Contacto eliminado";
 	}
 			
 		
