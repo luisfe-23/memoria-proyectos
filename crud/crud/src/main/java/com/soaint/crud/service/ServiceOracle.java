@@ -120,11 +120,39 @@ public class ServiceOracle  {
 			try {
 				String contactJSON = new ObjectMapper().writeValueAsString(l1);
 				System.out.println(new ObjectMapper().writeValueAsString(l1));
-				return Metodos.crearlead(contactJSON);
+				return crearlead(contactJSON);
 			}catch (Exception e) {
 				e.printStackTrace();
 				return "Error";
 			}	
+		}
+		
+//*************************************************************************************************************
+		
+		public static String crearlead(String contacto) {
+			String response = ""; 
+			
+			try {	
+				
+				CloseableHttpClient httpclient = HttpClients.createDefault(); 
+				HttpPost httpPost = new HttpPost(Services.getURLOracle() + Services.leadOsc());
+				String autorizacion = Services.getUserOracle() + ":" + Services.getPasswdOracle();
+				String basicAutorizacion = "Basic " + Base64.getEncoder().encodeToString(autorizacion.getBytes());
+						
+				StringEntity entity = new StringEntity(contacto);
+				httpPost.setHeader(HttpHeaders.AUTHORIZATION, basicAutorizacion);
+				httpPost.setEntity(entity);
+				httpPost.setHeader("Accept", "application/json");
+				httpPost.setHeader("Content-type", "application/json");
+				
+				httpclient.execute(httpPost);
+				httpclient.close();
+						
+			} catch (Exception exception) {
+				exception.printStackTrace();
+					
+			}	
+			return response;	
 		}
 				
 //**************************************DeleteLead******************************
@@ -184,6 +212,4 @@ public class ServiceOracle  {
 				return"Error";
 		}
 	}
-			
-		
 }

@@ -79,17 +79,16 @@ public class ServiceEloqua{
 				httpclient.execute(httpPost);
 				httpclient.close();
 				
-				System.out.println("Contacto creado con exito Eloqua");	
-				response = httpPost.getRequestLine().toString();
+				return "Contacto creado con exito Eloqua";
+				
 	
 			} else {
-				System.out.println("Contacto no se ha podido crear");
+				return"Contacto no se ha podido crear";
 			}
 		} catch (Exception e) {
 			
-			System.out.println("Error");
+			return"Error";
 		}
-		return response;
 				
 	}
 	

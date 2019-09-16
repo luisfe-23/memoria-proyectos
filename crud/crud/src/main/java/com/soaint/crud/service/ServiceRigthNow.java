@@ -92,7 +92,6 @@ public String crearRn(String contacto) {
 					httpclient.close();
 
 					System.out.println("Contacto creado con exito Rn");
-					response = httpPost.getRequestLine().toString();
 					} else {
 						System.out.println("Contacto existente");
 					}
